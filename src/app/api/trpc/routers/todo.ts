@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../[trpc]/trpc";
 
+import { createTRPCRouter, protectedProcedure } from "../[trpc]/trpc";
 
 export const TodoRouter = createTRPCRouter({
   // CREATE
@@ -10,34 +10,35 @@ export const TodoRouter = createTRPCRouter({
       return ctx.prisma.todo.create({
         data: {
           title: input.title,
-          userId: ctx.session.user.id
-        }
+          userId: ctx.session.user.id,
+        },
       });
     }),
 
-  // READ 
-  getTodos: protectedProcedure
-    .query(async ({ ctx }) => {
-      return ctx.prisma.todo.findMany({
-        where: {
-          userId: ctx.session.user.id
-        },
-        orderBy: {
-          createdAt: 'desc'
-        }
-      });
-    }),
+  // READ
+  getTodos: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.prisma.todo.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }),
 
   // UPDATE
   updateTodo: protectedProcedure
-    .input(z.object({ id: z.string(), title: z.string(), completed: z.boolean() }))
+    .input(
+      z.object({ id: z.string(), title: z.string(), completed: z.boolean() })
+    )
     .mutation(async ({ ctx, input }) => {
       return ctx.prisma.todo.update({
         where: { id: input.id },
         data: {
           title: input.title,
-          completed: input.completed
-        }
+          completed: input.completed,
+        },
       });
     }),
 
@@ -47,8 +48,4 @@ export const TodoRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return ctx.prisma.todo.delete({ where: { id: input.id } });
     }),
-})
-
-
-
-
+});

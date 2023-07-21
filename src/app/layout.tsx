@@ -1,5 +1,7 @@
-import './globals.css';
+import "./globals.css";
+
 import { TrpcProvider } from "@/utils/trpc-provider";
+
 import AuthProvider from "../context/AuthProvider";
 
 export const metadata = {
@@ -16,9 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthProvider>
-          <TrpcProvider>
-            {children}
-          </TrpcProvider>
+          <TrpcProvider>{children}</TrpcProvider>
         </AuthProvider>
       </body>
     </html>
