@@ -6,7 +6,11 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "format": "npx prettier --write . --ignore-path .gitignore --cache",
+    "lint": "next lint -- --ignore-path .gitignore",
+    "lint:fix": "npm run format && npm run lint -- --fix",
+    "type-check": "tsc --noEmit",
+    "postinstall": "prisma generate",
     "resetdb": "npx prisma migrate reset --preview-feature",
     "updatedb": "npx prisma db push"
   },
@@ -55,6 +59,7 @@
     "prettier-plugin-tailwindcss": "^0.2.8",
     "prisma": "^5.0.0",
     "tailwindcss": "3.3.2",
-    "typescript": "5.1.6"
+    "typescript": "5.1.6",
+    "eslint-plugin-import": "^2.27.5"
   }
 }
